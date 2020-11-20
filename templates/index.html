@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book2Scrolll</title>
+    <script src="https://tools-static.wmflabs.org/cdnjs/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://tools-static.wmflabs.org/cdnjs/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://tools-static.wmflabs.org/cdnjs/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://tools-static.wmflabs.org/cdnjs/ajax/libs/bootstrap-table/1.16.0/bootstrap-table.min.css">
+    <script src="https://tools-static.wmflabs.org/cdnjs/ajax/libs/bootstrap-table/1.16.0/bootstrap-table.min.js"></script>
+    <style>
+        .navbar {
+            box-shadow: 0px 8px 8px -6px rgba(0, 0, 0, .5);
+        }
+    </style>
+    <script>
+        $(function () {
+            langData = {
+                "as": [106, 104],
+                "bn": [102, 104],
+                "en": [106, 104],
+                "gu": [106, 104],
+                "hi": [252, 250],
+                "kn": [106, 104],
+                "ml": [104, 106],
+                "mr": [106, 104],
+                "or": [252, 250],
+                "pa": [252, 250],
+                "sa": [106, 104],
+                "ta": [252, 250],
+                "te": [106, 106]
+            };
+            $("#projectlang").on("change", function () {
+                $("#langform").hide();
+                $("footer").hide();
+                $("#dataTable").show();
+                $("#tableBody").append('<tr><td colspan="2" style="color: red; text-align: left">Loading........</td></tr>');
+                var lang = $(this).val(),
+                    ns = langData[lang][0],
+                    link_format = "{{ url_for('readbook', lang='lang', book='book') }}";
+
+                $.ajax({
+                    url: "{{ url_for('getbooks') }}",
+                    data: {
+                        lang: lang,
+                        ns: ns
+                    },
+                    success: function (data) {
+                        $("#tableBody").empty();
+                        d = [];
+                        for (const i in data) {
+                            l = link_format.replace('lang', lang).replace('book', i);
+                            link_anchor = `<a href='${l}'> ${i} </a>`;
+                            d.push({page: data[i], name: link_anchor})
+                        }
+
+                        $('#table').bootstrapTable("load", d);
+                    },
+                    fail: function (e) {
+                        console.log(e)
+                    }
+                });
+            });
+        })
+    </script>
+</head>
+<nav class="navbar navbar-dark bg-primary">
+    <a class="navbar-brand" style="color: aliceblue">Book2Scroll</a>
+</nav>
+<body>
+<div class="container">
+    <br>
+    <div class="form-group row" id="langform">
+        <div class="col-6">
+            <label for="projectlang">Select language</label>
+            <select class="form-control" id="projectlang">
+                <option hidden selected>Select one...</option>
+                <option value="as">অসমীয়া</option>
+                <option value="bn">বাংলা</option>
+                <option value="en">English</option>
+                <option value="gu">ગુજરાતી</option>
+                <option value="hi">हिन्दी</option>
+                <option value="kn">ಕನ್ನಡ</option>
+                <option value="ml">മലയാളം</option>
+                <option value="mr">मराठी</option>
+                <option value="or">ଓଡ଼ିଆ</option>
+                <option value="pa">ਪੰਜਾਬੀ</option>
+                <option value="sa">संस्कृतम्</option>
+                <option value="ta">தமிழ்</option>
+                <option value="te">తెలుగు</option>
+            </select>
+        </div>
+    </div>
+    <div id="dataTable" style="display: none">
+        <table
+                class="table table-hover"
+                id="table"
+                data-toggle="table"
+                data-search="true"
+                data-sort-order="desc"
+                data-sort-name="page"
+                data-sortable="true"
+                data-show-fullscreen="true"
+                data-show-toggle="true"
+        >
+            <thead>
+            <tr>
+                <th scope="col" data-field="page" data-sortable="true">Pages</th>
+                <th scope="col" data-field="name" data-sortable="true">Name</th>
+            </tr>
+            </thead>
+            <tbody id="tableBody">
+            </tbody>
+        </table>
+    </div>
+</div>
+<footer style="float: right; bottom:20px;position:fixed;left:20px;">
+    Created and maintaining by <a href="https://meta.wikimedia.org/wiki/CIS-A2K/Team">CIS-A2K</a> team, based on Magnus Manske's <a href="https://bitbucket.org/magnusmanske/book2scroll/">book2scroll</a>.
+</footer>
+</body>
+</html>

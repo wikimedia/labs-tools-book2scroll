@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book2Scroll</title>
+    <script src="https://tools-static.wmflabs.org/cdnjs/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://tools-static.wmflabs.org/cdnjs/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</head>
+<body>
+<div id='container'>
+    <div id='searchresults'>
+    </div>
+    <div id='header' style='height:26pt'>
+        <div id='pagenav' class='header-hideable'>
+            <form class='form-inline'>
+                <a href="{{ url_for('index') }}">Books</a> |
+                Page <span id='selbox'></span> of <span id='last_page_number'></span>&nbsp;&nbsp;|&nbsp;&nbsp;
+                <label class='checkbox'><input type='checkbox' id='show_headers' name='show_headers' checked/>&nbsp;Headers</label>&nbsp;&nbsp;|&nbsp;&nbsp;
+                <label class='checkbox'><input type='checkbox' id='show_text' name='show_text' checked />&nbsp;<img src="//upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Crystal_Clear_app_kedit.svg/24px-Crystal_Clear_app_kedit.svg.png" style='vertical-align:middle' /></label>&nbsp;&nbsp;|&nbsp;&nbsp;
+                <label class='checkbox'><input type='checkbox' id='show_image' name='show_image' checked />&nbsp;<img src="//upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Crystal_Clear_device_scanner.png/24px-Crystal_Clear_device_scanner.png" style='vertical-align:middle' /></label>
+            </form>
+        </div>
+        <div id='title'></div>
+        </div>
+
+        <div id='loading'>Loading…</div>
+        <div id='body'>
+        </div>
+        <div id='searchmarkers'>
+        </div>
+    </div>
+</body>
+</html>
