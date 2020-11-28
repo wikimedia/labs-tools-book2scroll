@@ -63,6 +63,14 @@
                     }
                 });
             });
+
+            if( '{{ lang}}' !== '' ) {
+                if( langData['{{ lang }}'] === undefined ){
+                    alert('Tool does not support {{ lang }} language.')
+                } else {
+                    $('#projectlang').val( '{{ lang }}' ).trigger('change');
+                }
+            }
         })
     </script>
 </head>

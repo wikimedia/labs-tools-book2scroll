@@ -12,6 +12,11 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/<string:lang>/')
+def lang(lang):
+    return render_template('index.html', lang=lang)
+
+
 @app.route('/read/<string:lang>/<string:book>')
 def readbook(lang, book):
     return render_template('read.html')
