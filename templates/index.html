@@ -15,6 +15,7 @@
     </style>
     <script>
         $(function () {
+            $("#back").hide()
             langData = {
                 "as": [106, 104],
                 "bn": [102, 104],
@@ -33,6 +34,7 @@
             $("#projectlang").on("change", function () {
                 $("#langform").hide();
                 $("footer").hide();
+                $("#back").show();
                 $("#dataTable").show();
                 $("#tableBody").append('<tr><td colspan="2" style="color: red; text-align: left">Loading........</td></tr>');
                 var lang = $(this).val(),
@@ -65,11 +67,12 @@
     </script>
 </head>
 <nav class="navbar navbar-dark bg-primary">
-    <a class="navbar-brand" style="color: aliceblue">Book2Scroll</a>
+    <a  href="{{ url_for('index') }}" class="navbar-brand" style="color: aliceblue">Book2Scroll</a>
 </nav>
 <body>
 <div class="container">
     <br>
+    <a id="back" href="{{ url_for('index') }}" class="btn btn-secondary">Back to Home</a>
     <div class="form-group row" id="langform">
         <div class="col-6">
             <label for="projectlang">Select language</label>
